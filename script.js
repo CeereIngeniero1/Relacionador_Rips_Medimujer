@@ -1,4 +1,4 @@
-const servidor = "HPRED241";
+const servidor = "HPGRIS";
 
 const login = async () => {
     const username = document.getElementById('inputUsername').value;

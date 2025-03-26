@@ -1,4 +1,4 @@
-const servidor = "HPRED241";
+const servidor = "HPGRIS";
 
 // Funcionalidad para incorporar buscador en el select de los pacientes
 $(document).ready(function(e) {
@@ -1973,4 +1973,245 @@ async function EmpresaATrabajar() {
     } catch (error) {
         console.error('Hubo un problema con la solicitud:', error);
     }
+}
+
+// FUNCIONALIDAD FRONT_END PARA LA CONFIGURACIÓN DE LOS RIPS ESPECIALES PARA MEDIMUJER (DR. FEDERICO)
+const SelectRipsEspecialesMedimujer = document.getElementById('SelectRipsEspecialesMedimujer');
+const CONTENEDOR_PARA_AC = document.getElementById('CONTENEDOR_PARA_AC');
+const CONTENEDOR_PARA_AP = document.getElementById('CONTENEDOR_PARA_AP');
+
+CONTENEDOR_PARA_AC.style.display = 'none';
+CONTENEDOR_PARA_AP.style.display = 'none';
+const Modalidad = document.getElementById('Modalidad');
+const GrupoServicioAC = document.getElementById('GrupoServicioAC');
+const ServicioAC = document.getElementById('ServicioAC');
+const GrupoServicioAP = document.getElementById('GrupoServicioAP');
+const ServicioAP = document.getElementById('ServicioAP');
+SelectRipsEspecialesMedimujer.addEventListener('change', async function (e) {
+    switch(this.value) {
+        case 'AC':
+            CONTENEDOR_PARA_AC.style.display = 'block';
+            CONTENEDOR_PARA_AP.style.display = 'none';
+
+            // Funcionalidad para el llenado del select de ModalidadGrupoServicioTecnologíaSalud
+            const ModalidadGrupoServicioTecnologiaSalud = await fetch(`http://${servidor}:3000/api/ModalidadAtencion`);
+            if (!ModalidadGrupoServicioTecnologiaSalud) {
+                throw new Error(`Error al obtener las modalidades de grupo servicio tecnología salud: ${ModalidadGrupoServicioTecnologiaSalud.statusText}`);
+            }
+            const CargarModalidadGrupoServicioTecnologiaSalud = await ModalidadGrupoServicioTecnologiaSalud.json();
+            // console.log('Modalidades de Grupo Servicio Tecnología Salud: ', CargarModalidadGrupoServicioTecnologiaSalud);
+
+            Modalidad.innerHTML = '';
+            // Opción por defecto
+            const defaultOption2 = document.createElement('option');
+            defaultOption2.textContent = 'Seleccione una modalidad';
+            defaultOption2.value = '';
+            Modalidad.appendChild(defaultOption2);
+
+            // Ordenar el array por el nombre completo del paciente
+            CargarModalidadGrupoServicioTecnologiaSalud.sort((a, b) => {
+                if (a.NombreModalidadAtencion < b.NombreModalidadAtencion) return -1;
+                if (a.NombreModalidadAtencion > b.NombreModalidadAtencion) return 1;
+                return 0;
+            });
+
+            for (let i = 0; i < CargarModalidadGrupoServicioTecnologiaSalud.length; i+=1) {
+                const option = document.createElement('option');
+                option.value = CargarModalidadGrupoServicioTecnologiaSalud[i].Codigo;
+                option.textContent = CargarModalidadGrupoServicioTecnologiaSalud[i].NombreModalidadAtencion;
+                Modalidad.appendChild(option);
+            }
+            //_____________________________________________________________________________________________________
+
+             // Funcionalidad para el llenado del select de GrupoServiciosAC
+             const GrupoServiciosAC = await fetch(`http://${servidor}:3000/api/GrupoServicios`);
+             if (!GrupoServiciosAC) {
+                 throw new Error(`Error al obtener los grupos de servicios AC: ${GrupoServiciosAC.statusText}`);
+             }
+             const CargarGrupoServiciosAC = await GrupoServiciosAC.json();
+             // console.log('Grupos de Servicios AC: ', CargarGrupoServiciosAC);
+             GrupoServicioAC.innerHTML = '';
+             // Opción por defecto
+             const defaultOption3 = document.createElement('option');
+             defaultOption3.textContent = 'Seleccione un grupo';
+             defaultOption3.value = '';
+             GrupoServicioAC.appendChild(defaultOption3);
+             // Ordenar el array por el nombre del grupo
+             CargarGrupoServiciosAC.sort((a, b) => {
+                 if (a.NombreGrupoServicios < b.NombreGrupoServicios) return -1;
+                 if (a.NombreGrupoServicios > b.NombreGrupoServicios) return 1;
+                 return 0;
+             });
+ 
+             // Agregar las opciones al select de GrupoServiciosAC
+             for (let i = 0; i < CargarGrupoServiciosAC.length; i+=1) {
+                 const option = document.createElement('option');
+                 option.value = CargarGrupoServiciosAC[i].Codigo;
+                 option.textContent = CargarGrupoServiciosAC[i].NombreGrupoServicios;
+                 GrupoServicioAC.appendChild(option);
+             }
+            //_____________________________________________________________________________________________________
+            break;
+        case 'AP':
+            CONTENEDOR_PARA_AP.style.display = 'block';
+            CONTENEDOR_PARA_AC.style.display = 'none';
+
+            //Funcionalidad para el llenado del select GrupoServiciosAP
+            const GrupoServiciosAP = await fetch(`http://${servidor}:3000/api/GrupoServicios`);
+            if (!GrupoServiciosAP) {
+                throw new Error(`Error al obtener los grupos de servicios RIPS: ${GrupoServiciosAP.statusText}`);
+            }
+            const CargarGrupoServiciosAP = await GrupoServiciosAP.json();
+            // console.log('Grupos de Servicios RIPS AP: ', CargarGrupoServiciosAP);
+            GrupoServicioAP.innerHTML = '';
+            // Opción por defecto
+            const defaultOption4 = document.createElement('option');
+            defaultOption4.textContent = 'Seleccione un grupo de servicios';
+            defaultOption4.value = '';
+            GrupoServicioAP.appendChild(defaultOption4);
+            // Ordenar el array por el nombre del grupo de servicios
+            CargarGrupoServiciosAP.sort((a, b) => {
+                if (a['NombreGrupoServicios'] < b['NombreGrupoServicios']) return -1;
+                if (a['NombreGrupoServicios'] > b['NombreGrupoServicios']) return 1;
+                return 0;
+            });
+            for (let i = 0; i < CargarGrupoServiciosAP.length; i++) {
+                const option = document.createElement('option');
+                option.value = CargarGrupoServiciosAP[i]['Codigo'];
+                option.textContent = CargarGrupoServiciosAP[i]['NombreGrupoServicios'];
+                GrupoServicioAP.appendChild(option);
+            }
+            break;
+        default:
+            CONTENEDOR_PARA_AC.style.display = 'none';
+            CONTENEDOR_PARA_AP.style.display = 'none';
+
+            const LimpiarSelectAC = document.querySelectorAll('#CONTENEDOR_PARA_AC select'); // Selecciona todos los select dentro del div
+            LimpiarSelectAC.forEach(select => {
+                // Limpia las opciones del select
+                while (select.options.length) {
+                    select.remove(0); // Elimina el primer elemento hasta que no queden opciones
+                }
+            });
+
+            const LimpiarSelectAP = document.querySelectorAll('#CONTENEDOR_PARA_AP select'); // Selecciona todos los select dentro del div
+            LimpiarSelectAP.forEach(select => {
+                // Limpia las opciones del select
+                while (select.options.length) {
+                    select.remove(0); // Elimina el primer elemento hasta que no queden opciones
+                }
+            });
+            break;
+    }
+});
+
+// FUNCIONALIDAD FRONT_END PARA EL LLENADO DEL SELECT DE SERVICIO AC (DR. FEDERICO)
+GrupoServicioAC.addEventListener('change', async function (e) {
+    try {
+        // console.log(this.value);
+        const CargarServicios = await fetch(`http://${servidor}:3000/api/Servicios/${this.value}`);
+        if (!CargarServicios.ok) {
+            throw new Error(`Error al obtener los servicios: ${CargarServicios.statusText}`);
+        }
+        const CargarServiciosAC = await CargarServicios.json();
+        // console.log('Servicios: ', CargarServiciosAC);
+
+        ServicioAC.innerHTML = '';
+        // Opción por defecto
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = 'Seleccione un servicio';
+        defaultOption.value = '';
+        ServicioAC.appendChild(defaultOption);
+        // Ordenar el array por el nombre del servicio
+        CargarServiciosAC.sort((a, b) => {
+            if (a['Nombre Servicios'] < b['Nombre Servicios']) return -1;
+            if (a['Nombre Servicios'] > b['Nombre Servicios']) return 1;
+            return 0;
+        });
+
+        for (let i = 0; i < CargarServiciosAC.length; i++) {
+            const option = document.createElement('option');
+            option.value = CargarServiciosAC[i]['Id Servicios'];
+            option.textContent = CargarServiciosAC[i]['Nombre Servicios'];
+            ServicioAC.appendChild(option);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// FUNCIONALIDAD FRONT_END PARA EL LLENADO DEL SELECT DE SERVICIO AP (DR. FEDERICO)
+GrupoServicioAP.addEventListener('change', async function (e) {
+    try {
+        // console.log(this.value);
+        const CargarServicios = await fetch(`http://${servidor}:3000/api/Servicios/${this.value}`);
+        if (!CargarServicios.ok) {
+            throw new Error(`Error al obtener los servicios: ${CargarServicios.statusText}`);
+        }
+        const CargarServiciosAC = await CargarServicios.json();
+        // console.log('Servicios: ', CargarServiciosAC);
+
+        ServicioAP.innerHTML = '';
+        // Opción por defecto
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = 'Seleccione un servicio';
+        defaultOption.value = '';
+        ServicioAP.appendChild(defaultOption);
+        // Ordenar el array por el nombre del servicio
+        CargarServiciosAC.sort((a, b) => {
+            if (a['Nombre Servicios'] < b['Nombre Servicios']) return -1;
+            if (a['Nombre Servicios'] > b['Nombre Servicios']) return 1;
+            return 0;
+        });
+
+        for (let i = 0; i < CargarServiciosAC.length; i++) {
+            const option = document.createElement('option');
+            option.value = CargarServiciosAC[i]['Id Servicios'];
+            option.textContent = CargarServiciosAC[i]['Nombre Servicios'];
+            ServicioAP.appendChild(option);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+const CerrarModalConfigurarRipsEspecialesMedimujer = document.getElementById('CerrarModalConfigurarRipsEspecialesMedimujer');
+CerrarModalConfigurarRipsEspecialesMedimujer.addEventListener('click', () => {
+    const LimpiarSelectAC = document.querySelectorAll('#CONTENEDOR_PARA_AC select'); // Selecciona todos los select dentro del div
+    LimpiarSelectAC.forEach(select => {
+        // Limpia las opciones del select
+        while (select.options.length) {
+            select.remove(0); // Elimina el primer elemento hasta que no queden opciones
+        }
+    });
+
+    const LimpiarSelectAP = document.querySelectorAll('#CONTENEDOR_PARA_AP select'); // Selecciona todos los select dentro del div
+    LimpiarSelectAP.forEach(select => {
+        // Limpia las opciones del select
+        while (select.options.length) {
+            select.remove(0); // Elimina el primer elemento hasta que no queden opciones
+        }
+    }); 
+
+    reiniciarSelect();
+});
+
+function reiniciarSelect() {
+    // Reiniciar el valor del select
+    SelectRipsEspecialesMedimujer.value = '';
+
+    // Crear y despachar un evento 'change'
+    const event = new Event('change', {
+        bubbles: true,
+        cancelable: true
+    });
+    SelectRipsEspecialesMedimujer.dispatchEvent(event);
+
+    const selects = ModalRIPSPorDefecto.querySelectorAll('select');
+    selects.forEach(select => {
+        // Excluir el select con id 'selectExcluido'
+        if (select.id !== 'SelectRipsEspecialesMedimujer') {
+            select.innerHTML = ''; // Vaciar las opciones
+        }
+    });
 }
