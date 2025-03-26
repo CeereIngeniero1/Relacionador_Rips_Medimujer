@@ -13,6 +13,7 @@ const InfoPacientesRoutes = require('./routes/infoPacientesRoutes');
 const epsRoutes = require('./routes/epsRoutes');
 const AsignarRips = require('./routes/Asignar_RipsRoutes');
 const MaestroListasRIPS = require('./routes/MaestroListasRipsRoutes');
+const MaestroRips = require('./routes/MaestroRipsRoutes');
 
 
 /* =========================================================================================================== */
@@ -111,6 +112,8 @@ app.use('/api', epsRoutes);
 app.use('/api', AsignarRips);
 
 app.use('/api', MaestroListasRIPS);
+
+app.use('/api', MaestroRips);
 
 const port = 3000;
 // app.listen(port, () => {

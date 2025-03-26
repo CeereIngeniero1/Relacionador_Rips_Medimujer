@@ -41,6 +41,7 @@
         <img src="images/Ceere_logo.png" alt="">
         <h2 id="nombreUsuarioLink"></h2>
         <button type="button" id="BotonMaestro" data-bs-toggle="modal" data-bs-target="#ModalParaMaestro">Maestro</button>
+        <button type="button" id="BotonConfiguracion" data-bs-toggle="modal" data-bs-target="#ModalParaConfiguracion">Maestro</button>
         <button type="button" id="descargarRIPS" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Descargar RIPS JSON</button>
         <button type="button" id="XMLS" data-bs-toggle="modal" data-bs-target="#ModalEmpresasResolucionVigente">XMLS</button>
         <a href="./GENERADOR_ARCHIVOS_RIPS_PART/index.php" id="generadorRIPS">GENERADOR INFORMES RIPS</a>
@@ -258,7 +259,122 @@
                 </div>
             </div>
         </div>
+        
 
+         <!-- MODAL PARA MAESTRO DE  Configuracion -->
+         <div class="modal fade" id="ModalParaConfiguracion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-top">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                    </div>
+                    <div class="modal-body">
+                        <span class="fw-bolder">Selecciona el tipo:</span>
+                        <select name="" id="SelectListarDatosRIPS" class="form-select-sm w-30 mb-2 border border-secondary">
+                            <option value="">Sin seleccionar</option>
+                            <option value="ModalidadGrupoServicioTecSal">Modalidad Grupo Servicio Tecnología Salud - [AC y AP]</option>
+                            <option value="GrupoServicios">Grupo Servicios - [AC y AP]</option>
+                            <option value="CodServicio">Código Servicios - [AC y AP]</option>
+                            <option value="FinalidadTecnologiaSalud">Finalidad Tecnología Salud - [AC y AP]</option>
+                            <option value="CausaMotivoAtencion">Causa Motivo Atención - [AC y AP]</option>
+                            <option value="ViaIngresoServicioSalud">Via Ingreso Servicio Salud - [AP]</option>
+                        </select>
+                        
+                        <!-- Contenedor para Modalidad Grupo Servicio Tecnología Salud -->
+                        <div class="form-control w-100 d-block">
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE MODALIDAD GRUPO SERVICIO TECNOLOGIA SALUD -->
+                            <table id="TablaModalidadGrupoServicioTecnologiaSalud" class="w-100" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE GRUPO SERVICIOS -->
+                            <table id="TablaGrupoServicios" class="w-100" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE CÓDIGO SERVICIOS -->
+                            <table id="TablaCodigoServicios" class="w-100" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Grupo</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            </table>
+
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE FINALIDAD TECNOLOGÍA SALUD -->
+                            <table id="TablaFinalidadTecnologiaSalud" class="w-100" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE CAUSA MOTIVO DE ATENCIÓN -->
+                            <table id="TablaCausaMotivoAtencion" class="w-100" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <!-- TABLA PARA LISTAR TODA LA INFO SOBRE VIA INGRESO SERVICIO SALUD -->
+                            <table id="TablaViaIngresoServicioSalud" class="w-100" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Código</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody> 
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm fw-bolder" data-bs-dismiss="modal" id="CerrarModalMaestro">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal JSON -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
