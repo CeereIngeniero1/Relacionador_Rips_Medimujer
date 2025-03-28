@@ -1,7 +1,7 @@
 const servidor = "HPRED241";
 
 // Funcionalidad para incorporar buscador en el select de los pacientes
-$(document).ready(function(e) {
+$(document).ready(function (e) {
     $('#listaPaciente').select2({
         width: '100%', // Ajusta el ancho al contenedor
         dropdownAutoWidth: true, // Ajusta automáticamente el ancho del menú
@@ -268,9 +268,9 @@ const selectPaciente = document.querySelector('#listaPaciente');
 //     }
 // });
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#listaPaciente').on('change', async function() {
+    $('#listaPaciente').on('change', async function () {
         const documentoSeleccionado = $(this).val(); // Obtener el valor seleccionado
         console.log(documentoSeleccionado);
 
@@ -830,7 +830,7 @@ async function DescargarArchivosJSON() {
         await Esperar(1000);
         // const response = await fetch(`http://${servidor}:3000/RIPS/usuarios/ripsEPS/${fechaInicioValue}/${fechaFinValue}/${SelectResolucionesRips}/${documentoEmpresaSeleccionada}`);
         const response = await fetch(`http://${servidor}:3000/RIPS/usuarios/rips/${fechaInicioValue}/${fechaFinValue}/${SelectResolucionesRips}/${documentoEmpresaSeleccionada}`);
-        
+
         if (!response.ok) {
             throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
         }
@@ -1808,7 +1808,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (level === 1) {
             generadorRIPSLink.style.display = 'none';
         } else {
-            generadorRIPSLink.style.display = 'none';            
+            generadorRIPSLink.style.display = 'none';
             const ElementosABloquear = {
                 'BotonMaestro': 'Maestro (Deshabilitado)',
                 'descargarRIPS': 'Descargar RIPS (Deshabilitado)',
@@ -1821,16 +1821,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 'btnRelacionar': '',
                 'AsignarFacturaManual': ''
             }
-        
+
             for (let key in ElementosABloquear) {
                 const elemento = document.getElementById(key); // Obtener el elemento del DOM usando el ID
-        
+
                 if (elemento) { // Verificar que el elemento exista
                     elemento.disabled = true;
                     elemento.classList.remove('btn-primary');
                     elemento.classList.add('btn-danger');
                     elemento.textContent = ElementosABloquear[key]; // Cambia el texto del botón
-                    elemento.style.pointerEvents = "none"; 
+                    elemento.style.pointerEvents = "none";
                 }
             }
         }
@@ -1982,13 +1982,14 @@ const CONTENEDOR_PARA_AP = document.getElementById('CONTENEDOR_PARA_AP');
 
 CONTENEDOR_PARA_AC.style.display = 'none';
 CONTENEDOR_PARA_AP.style.display = 'none';
+const SelectPorDefectoDiagnosticoRIPS = document.getElementById('SelectPorDefectoDiagnosticoRIPS');
 const Modalidad = document.getElementById('Modalidad');
 const GrupoServicioAC = document.getElementById('GrupoServicioAC');
 const ServicioAC = document.getElementById('ServicioAC');
 const GrupoServicioAP = document.getElementById('GrupoServicioAP');
 const ServicioAP = document.getElementById('ServicioAP');
 SelectRipsEspecialesMedimujer.addEventListener('change', async function (e) {
-    switch(this.value) {
+    switch (this.value) {
         case 'AC':
             CONTENEDOR_PARA_AC.style.display = 'block';
             CONTENEDOR_PARA_AP.style.display = 'none';
@@ -2015,7 +2016,7 @@ SelectRipsEspecialesMedimujer.addEventListener('change', async function (e) {
                 return 0;
             });
 
-            for (let i = 0; i < CargarModalidadGrupoServicioTecnologiaSalud.length; i+=1) {
+            for (let i = 0; i < CargarModalidadGrupoServicioTecnologiaSalud.length; i += 1) {
                 const option = document.createElement('option');
                 option.value = CargarModalidadGrupoServicioTecnologiaSalud[i].Codigo;
                 option.textContent = CargarModalidadGrupoServicioTecnologiaSalud[i].NombreModalidadAtencion;
@@ -2023,38 +2024,96 @@ SelectRipsEspecialesMedimujer.addEventListener('change', async function (e) {
             }
             //_____________________________________________________________________________________________________
 
-             // Funcionalidad para el llenado del select de GrupoServiciosAC
-             const GrupoServiciosAC = await fetch(`http://${servidor}:3000/api/GrupoServicios`);
-             if (!GrupoServiciosAC) {
-                 throw new Error(`Error al obtener los grupos de servicios AC: ${GrupoServiciosAC.statusText}`);
-             }
-             const CargarGrupoServiciosAC = await GrupoServiciosAC.json();
-             // console.log('Grupos de Servicios AC: ', CargarGrupoServiciosAC);
-             GrupoServicioAC.innerHTML = '';
-             // Opción por defecto
-             const defaultOption3 = document.createElement('option');
-             defaultOption3.textContent = 'Seleccione un grupo';
-             defaultOption3.value = '';
-             GrupoServicioAC.appendChild(defaultOption3);
-             // Ordenar el array por el nombre del grupo
-             CargarGrupoServiciosAC.sort((a, b) => {
-                 if (a.NombreGrupoServicios < b.NombreGrupoServicios) return -1;
-                 if (a.NombreGrupoServicios > b.NombreGrupoServicios) return 1;
-                 return 0;
-             });
- 
-             // Agregar las opciones al select de GrupoServiciosAC
-             for (let i = 0; i < CargarGrupoServiciosAC.length; i+=1) {
-                 const option = document.createElement('option');
-                 option.value = CargarGrupoServiciosAC[i].Codigo;
-                 option.textContent = CargarGrupoServiciosAC[i].NombreGrupoServicios;
-                 GrupoServicioAC.appendChild(option);
-             }
+            // Funcionalidad para el llenado del select de GrupoServiciosAC
+            const GrupoServiciosAC = await fetch(`http://${servidor}:3000/api/GrupoServicios`);
+            if (!GrupoServiciosAC) {
+                throw new Error(`Error al obtener los grupos de servicios AC: ${GrupoServiciosAC.statusText}`);
+            }
+            const CargarGrupoServiciosAC = await GrupoServiciosAC.json();
+            // console.log('Grupos de Servicios AC: ', CargarGrupoServiciosAC);
+            GrupoServicioAC.innerHTML = '';
+            // Opción por defecto
+            const defaultOption3 = document.createElement('option');
+            defaultOption3.textContent = 'Seleccione un grupo';
+            defaultOption3.value = '';
+            GrupoServicioAC.appendChild(defaultOption3);
+            // Ordenar el array por el nombre del grupo
+            CargarGrupoServiciosAC.sort((a, b) => {
+                if (a.NombreGrupoServicios < b.NombreGrupoServicios) return -1;
+                if (a.NombreGrupoServicios > b.NombreGrupoServicios) return 1;
+                return 0;
+            });
+
+            // Agregar las opciones al select de GrupoServiciosAC
+            for (let i = 0; i < CargarGrupoServiciosAC.length; i += 1) {
+                const option = document.createElement('option');
+                option.value = CargarGrupoServiciosAC[i].Codigo;
+                option.textContent = CargarGrupoServiciosAC[i].NombreGrupoServicios;
+                GrupoServicioAC.appendChild(option);
+            }
+
+            //rips cie
+
+            // Funcinalidad para el llenado del select Diagnósitoco RIPS AC 2
+            const DiasnosticoRIPSAC = await fetch(`http://${servidor}:3000/api/Cie`);
+            if (!DiasnosticoRIPSAC) {
+                throw new Error(`Error al obtener los diagnósticos RIPS: ${DiasnosticoRIPSAC.statusText}`);
+            }
+            const CargarDiagnosticoRIPSAC2 = await DiasnosticoRIPSAC.json();
+            // console.log('Diagnósticos RIPS AC 1: ', CargarDiagnosticoRIPSAC2);
+            SelectPorDefectoDiagnosticoRIPS.innerHTML = '';
+            // Opción por defecto
+            const defaultOption10 = document.createElement('option');
+            defaultOption10.textContent = 'Seleccione un diagnóstico RIPS AC';
+            defaultOption10.value = '';
+            SelectPorDefectoDiagnosticoRIPS.appendChild(defaultOption10);
+            // Ordenar el array por el nombre del grupo
+            CargarDiagnosticoRIPSAC2.sort((a, b) => {
+                if (a.Nombre < b.Nombre) return -1;
+                if (a.Nombre > b.Nombre) return 1;
+                return 0;
+            });
+            // Agregar las opciones al select Diagnósitoco RIPS AC 1
+            for (let i = 0; i < CargarDiagnosticoRIPSAC2.length; i += 1) {
+                const option = document.createElement('option');
+                option.value = CargarDiagnosticoRIPSAC2[i].Codigo;
+                option.textContent = CargarDiagnosticoRIPSAC2[i].Codigo + ' - ' + CargarDiagnosticoRIPSAC2[i].Nombre;
+                SelectPorDefectoDiagnosticoRIPS.appendChild(option);
+            }
+
             //_____________________________________________________________________________________________________
             break;
         case 'AP':
             CONTENEDOR_PARA_AP.style.display = 'block';
             CONTENEDOR_PARA_AC.style.display = 'none';
+
+
+            // Funcionalidad para el llenado del select Procedimiento AP 1
+            const TipoProcedimientoAP1 = "AP";
+            const ProcedimientoAP1 = await fetch(`http://${servidor}:3000/api/Cups/${TipoProcedimientoAP1}`);
+            if (!ProcedimientoAP1) {
+                throw new Error(`Error al obtener los procedimientos AP: ${ProcedimientoAP1.statusText}`);
+            }
+            const CargarProcedimientoAP1 = await ProcedimientoAP1.json();
+            // console.log('Procedimientos AP 1: ', CargarProcedimientoAP1);
+            SelectPorDefectoDiagnosticoRIPS2.innerHTML = '';
+            // Opción por defecto
+            const defaultOption6 = document.createElement('option');
+            defaultOption6.textContent = 'Seleccione un procedimiento AP';
+            defaultOption6.value = '';
+            SelectPorDefectoDiagnosticoRIPS2.appendChild(defaultOption6);
+            // Ordenar el array por el nombre del procedimiento
+            CargarProcedimientoAP1.sort((a, b) => {
+                if (a['Nombre'] < b['Nombre']) return -1;
+                if (a['Nombre'] > b['Nombre']) return 1;
+                return 0;
+            });
+            for (let i = 0; i < CargarProcedimientoAP1.length; i++) {
+                const option = document.createElement('option');
+                option.value = CargarProcedimientoAP1[i].Codigo;
+                option.textContent = CargarProcedimientoAP1[i].Codigo + ' - ' + CargarProcedimientoAP1[i].Nombre;
+                SelectPorDefectoDiagnosticoRIPS2.appendChild(option);
+            }
 
             //Funcionalidad para el llenado del select GrupoServiciosAP
             const GrupoServiciosAP = await fetch(`http://${servidor}:3000/api/GrupoServicios`);
@@ -2101,7 +2160,13 @@ SelectRipsEspecialesMedimujer.addEventListener('change', async function (e) {
                     select.remove(0); // Elimina el primer elemento hasta que no queden opciones
                 }
             });
+
+
+
+
             break;
+
+
     }
 });
 
@@ -2191,7 +2256,7 @@ CerrarModalConfigurarRipsEspecialesMedimujer.addEventListener('click', () => {
         while (select.options.length) {
             select.remove(0); // Elimina el primer elemento hasta que no queden opciones
         }
-    }); 
+    });
 
     reiniciarSelect();
 });
@@ -2215,3 +2280,35 @@ function reiniciarSelect() {
         }
     });
 }
+
+
+document.getElementById('DescargarXMLS').addEventListener('click', async () => {
+    MensajeDeCarga("Descargando XMLS...");
+    DescargarXMLSPorLaAPIDeFacturaTech();
+})
+
+
+$('#SelectPorDefectoDiagnosticoRIPS').select2({
+    width: '100%', // Ajusta el ancho al contenedor
+    dropdownAutoWidth: true, // Ajusta automáticamente el ancho del menú
+    // placeholder: "Buscar",
+    dropdownParent: $('#ModalParaConfiguracion'), // Reemplaza '#miModal' con el ID de tu modal
+    templateSelection: function (data) {
+        // Truncar el texto a 50 caracteres y añadir puntos suspensivos
+        var truncatedText = data.text.length > 50 ? data.text.substring(0, 50) + '...' : data.text;
+        return $('<span>' + truncatedText + '</span>');
+    }
+});
+
+
+$('#SelectPorDefectoDiagnosticoRIPS2').select2({
+    width: '100%', // Ajusta el ancho al contenedor
+    dropdownAutoWidth: true, // Ajusta automáticamente el ancho del menú
+    // placeholder: "Buscar",
+    dropdownParent: $('#ModalParaConfiguracion'), // Reemplaza '#miModal' con el ID de tu modal
+    templateSelection: function (data) {
+        // Truncar el texto a 50 caracteres y añadir puntos suspensivos
+        var truncatedText = data.text.length > 50 ? data.text.substring(0, 50) + '...' : data.text;
+        return $('<span>' + truncatedText + '</span>');
+    }
+});

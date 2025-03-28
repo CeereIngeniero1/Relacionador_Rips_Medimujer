@@ -308,6 +308,25 @@ tr:hover {
     border: 1px solid #007E82;
 }
 
+#BotonConfiguracion {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: #007E82;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    transition: all 0.4s;
+}
+#BotonConfiguracion:hover {
+    background-color: transparent;
+    color: #007E82;
+    border: 1px solid #007E82;
+}
+
 #descargarRIPS {
     width: 280px;
     height: 40px;

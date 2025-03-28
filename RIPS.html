@@ -33,6 +33,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+    
 </head>
 
 <body>
@@ -41,7 +43,7 @@
         <img src="images/Ceere_logo.png" alt="">
         <h2 id="nombreUsuarioLink"></h2>
         <button type="button" id="BotonMaestro" data-bs-toggle="modal" data-bs-target="#ModalParaMaestro">Maestro</button>
-        <button type="button" id="BotonConfiguracion" data-bs-toggle="modal" data-bs-target="#ModalParaConfiguracion">Maestro</button>
+        <button type="button" id="BotonConfiguracion" data-bs-toggle="modal" data-bs-target="#ModalParaConfiguracion">Rips Automatico</button>
         <button type="button" id="descargarRIPS" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Descargar RIPS JSON</button>
         <button type="button" id="XMLS" data-bs-toggle="modal" data-bs-target="#ModalEmpresasResolucionVigente">XMLS</button>
         <a href="./GENERADOR_ARCHIVOS_RIPS_PART/index.php" id="generadorRIPS">GENERADOR INFORMES RIPS</a>
@@ -281,6 +283,11 @@
                             <!-- DIV PARA CONFIGURAR LOS AC -->
                              <div class="CONTENEDOR_PARA_AC" id="CONTENEDOR_PARA_AC">
                                 <div class="row">
+                                    <span>Diagnostico</span>
+                                    <select name="" id="SelectPorDefectoDiagnosticoRIPS" class="form-select-sm w-100 border border-secondary">
+                                        <option value="Sin Seleccionar">Sin Seleccionar</option>
+                                    </select>
+
                                     <span>Modalidad</span>
                                     <select name="" id="Modalidad" class="form-select-sm w-30 mb-2 border border-secondary"></select>
                                     <span>Grupo Servicio</span>
@@ -293,6 +300,10 @@
                             <!-- DIV PARA CONFIGURAR LOS AP -->
                             <div class="CONTENEDOR_PARA_AP" id="CONTENEDOR_PARA_AP">
                                 <div class="row">
+                                    <span>Diagnostico</span>
+                                    <select name="" id="SelectPorDefectoDiagnosticoRIPS2" class="form-select-sm w-100 border border-secondary">
+                                        <option value="Sin Seleccionar">Sin Seleccionar</option>
+                                    </select>
                                     <span>Grupo Servicio</span>
                                     <select name="" id="GrupoServicioAP" class="form-select-sm w-30 mb-2 border border-secondary"></select>
                                     <span>Servicio</span>
