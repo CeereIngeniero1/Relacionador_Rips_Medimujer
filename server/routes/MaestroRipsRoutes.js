@@ -64,6 +64,67 @@ router.get('/ConsultarExisten', async (req, res) => {
 
 });
 
+router.post('/RegistrarRipsAutomatico/:TipoRips/:DX/:Modalidad/:GrupoServicio/:Servicio', (req, res) => {
+
+
+
+
+    const TipoRips = req.params.TipoRips;
+    const DX = req.params.DX;
+    const Modalidad = req.params.Modalidad;
+    const GrupoServicio = req.params.GrupoServicio;
+    const Servicio = req.params.Servicio;
+
+    let Actoquirurgico;
+    if (TipoRips == 'AC') {
+        Actoquirurgico = 1;
+    } else if (TipoRips == 'AP') {
+        Actoquirurgico = 2;
+    }
+
+    // console.log(`IdEvaluacion ${IdEvaluacion}`);
+
+    const requestInsert = new Request(
+        `
+    
+INSERT INTO [dbo].[RipsCodigoDX]
+            ([Diagnostico Rips]
+            ,[Id Acto Quirúrgico]
+            ,[Id Modalidad Atencion]
+            ,[Id Grupo Servicios]
+            ,[Id Servicios]
+        VALUES
+            (
+            @Cie1,
+            @Actoquirurgico,
+            @ModalidadGrupoServicioTecSal,
+            @GrupoServicios,
+            @CodServicio 
+            )
+    ) 
+    `, (err) => {
+        if (err) {
+            console.error('Error al insertar el Rips:', err.message);
+            res.status(500).json({ error: 'Error al insertar el RIPS' });
+        } else {
+            console.log('Inserción ejecutada con éxito');
+            res.json({ success: true, message: 'Rips insertado correctamente' });
+        }
+    });
+
+    // Ajustar los parámetros según las columnas y datos que estás insertando
+    requestInsert.addParameter('Actoquirurgico', TYPES.Int, Actoquirurgico); 
+    requestInsert.addParameter('Cie1', TYPES.NVarChar, DX);
+    requestInsert.addParameter('ModalidadGrupoServicioTecSal', TYPES.Int, Modalidad);
+    requestInsert.addParameter('GrupoServicios', TYPES.Int, GrupoServicio);
+    requestInsert.addParameter('CodServicio', TYPES.Int, Servicio); 
+
+
+
+
+    connection.execSql(requestInsert);
+});
+
 
 
 module.exports = router;

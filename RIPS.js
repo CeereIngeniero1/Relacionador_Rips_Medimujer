@@ -868,12 +868,102 @@ async function DescargarArchivosJSON() {
     }
 }
 
+async function RegistrarRipsAutomaticos() {
+    console.log("Prueba");
+    console.log(document.getElementById("SelectRipsEspecialesMedimujer").value);
+
+    let TipoRips;
+    let DX;
+    let Modalidad = 0;
+    let GrupoServicio;
+    let Servicio;
+    
+
+    if(document.getElementById("SelectRipsEspecialesMedimujer").value = 'AC'){
+
+        TipoRips = document.getElementById("SelectRipsEspecialesMedimujer").value;
+        DX = document.getElementById("SelectPorDefectoDiagnosticoRIPS").value;
+        Modalidad = document.getElementById("Modalidad").value;
+        GrupoServicio = document.getElementById("GrupoServicioAC").value;
+        Servicio = document.getElementById("ServicioAC").value;
+
+        console.log(document.getElementById("SelectPorDefectoDiagnosticoRIPS").value);
+        console.log(document.getElementById("Modalidad").value);
+        console.log(document.getElementById("GrupoServicioAC").value);
+        console.log(document.getElementById("ServicioAC").value);
+
+    }else if(document.getElementById("SelectRipsEspecialesMedimujer").value = 'AP'){
+
+        TipoRips = document.getElementById("SelectRipsEspecialesMedimujer").value;
+        DX = document.getElementById("SelectPorDefectoDiagnosticoRIPS2").value; 
+        GrupoServicio = document.getElementById("GrupoServicioAP").value;
+        Servicio = document.getElementById("ServicioAP").value;
+
+        console.log(document.getElementById("SelectPorDefectoDiagnosticoRIPS2").value);
+        console.log(document.getElementById("GrupoServicioAP").value); 
+        console.log(document.getElementById("ServicioAP").value);
+
+    }
+
+    try {
+        
+        await Esperar(1000);
+        // const response = await fetch(`http://${servidor}:3000/RIPS/usuarios/ripsEPS/${fechaInicioValue}/${fechaFinValue}/${SelectResolucionesRips}/${documentoEmpresaSeleccionada}`);
+        const response = await fetch(`http://${servidor}:3000/RIPS/RegistrarRipsAutomatico/${TipoRips}/${DX}/${Modalidad}/${GrupoServicio}/${Servicio}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        if (!response) {
+            throw new Error(`Error al obtener las entidades de RIPS: ${response.statusText}`);
+        } 
+        
+        Swal.fire({
+            icon: 'success',
+            html: `
+                <span style="color: #FFFFFF;">listo </span>
+            `,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        })
+
+        Swal.fire({
+            icon: 'success',
+            text: 'Se guardo la configuracion de manera exitosa'
+        })
+
+    } catch (error) {
+
+        Swal.fire({
+            icon: 'error',
+            text: 'Hubo un error al generar el archivo ZIP o al obtener los datos.'
+        })
+        console.error('Error al obtener datos o generar ZIP:', error);
+    }
+
+
+   
+    
+}
+
 document.getElementById('obtenerDatosBtn').addEventListener('click', async () => {
     // MensajeDeCarga("Descargando JSON...");
     // await Esperar(1000);
     DescargarArchivosJSON();
 
 })
+
+document.getElementById('RegistrarRipsAutomatico').addEventListener('click', async () => {
+    // MensajeDeCarga("Descargando JSON...");
+    // await Esperar(1000);
+    RegistrarRipsAutomaticos();
+
+})
+
 /* FIN FIN FIN */
 
 document.getElementById('descargarRIPS').addEventListener('click', async () => {
