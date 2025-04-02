@@ -870,18 +870,18 @@ async function DescargarArchivosJSON() {
 
 async function RegistrarRipsAutomaticos() {
     console.log("Prueba");
-    console.log(document.getElementById("SelectRipsEspecialesMedimujer").value);
-
-    let TipoRips;
-    let DX;
-    let Modalidad = 0;
-    let GrupoServicio;
-    let Servicio;
     
 
-    if(document.getElementById("SelectRipsEspecialesMedimujer").value = 'AC'){
+    var TipoRips = document.getElementById("SelectRipsEspecialesMedimujer").value;
+    var DX;
+    var Modalidad = 0;
+    var GrupoServicio;
+    var Servicio;
+    console.log(TipoRips);
 
-        TipoRips = document.getElementById("SelectRipsEspecialesMedimujer").value;
+    if(TipoRips = 'AC'){
+
+        
         DX = document.getElementById("SelectPorDefectoDiagnosticoRIPS").value;
         Modalidad = document.getElementById("Modalidad").value;
         GrupoServicio = document.getElementById("GrupoServicioAC").value;
@@ -892,9 +892,8 @@ async function RegistrarRipsAutomaticos() {
         console.log(document.getElementById("GrupoServicioAC").value);
         console.log(document.getElementById("ServicioAC").value);
 
-    }else if(document.getElementById("SelectRipsEspecialesMedimujer").value = 'AP'){
+    }else if(TipoRips = 'AP'){
 
-        TipoRips = document.getElementById("SelectRipsEspecialesMedimujer").value;
         DX = document.getElementById("SelectPorDefectoDiagnosticoRIPS2").value; 
         GrupoServicio = document.getElementById("GrupoServicioAP").value;
         Servicio = document.getElementById("ServicioAP").value;
@@ -907,9 +906,8 @@ async function RegistrarRipsAutomaticos() {
 
     try {
         
-        await Esperar(1000);
-        // const response = await fetch(`http://${servidor}:3000/RIPS/usuarios/ripsEPS/${fechaInicioValue}/${fechaFinValue}/${SelectResolucionesRips}/${documentoEmpresaSeleccionada}`);
-        const response = await fetch(`http://${servidor}:3000/RIPS/RegistrarRipsAutomatico/${TipoRips}/${DX}/${Modalidad}/${GrupoServicio}/${Servicio}`,
+        const response = await fetch(`http://${servidor}:3000/api/RegistrarRipsAutomatico/${TipoRips}/${DX}/${Modalidad}/${GrupoServicio}/${Servicio}`,
+        // const response = await fetch(`http://${servidor}:3000/api/RegistrarRipsAutomatico/AC/2/3/4/${Servicio}`,
             {
                 method: 'POST',
                 headers: {

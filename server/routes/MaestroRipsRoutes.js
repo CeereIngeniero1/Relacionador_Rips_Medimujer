@@ -92,7 +92,7 @@ INSERT INTO [dbo].[RipsCodigoDX]
             ,[Id Acto Quirúrgico]
             ,[Id Modalidad Atencion]
             ,[Id Grupo Servicios]
-            ,[Id Servicios]
+            ,[Id Servicios])
         VALUES
             (
             @Cie1,
@@ -101,7 +101,7 @@ INSERT INTO [dbo].[RipsCodigoDX]
             @GrupoServicios,
             @CodServicio 
             )
-    ) 
+    
     `, (err) => {
         if (err) {
             console.error('Error al insertar el Rips:', err.message);
